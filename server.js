@@ -2,6 +2,7 @@ import express from "express";
 
 import HttpError from "./middleware/HttpError.js";
 import router from "./routes/router.js";
+import connectDB from "./db/connectDB.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -26,6 +27,16 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "Server Error" });
 });
 
-app.listen(port, () => {
-  console.log("Server is running on port", port);
-});
+async function startServer() {
+  try {
+    await connectDB();
+    app.listen(port, () => {
+      console.log("Server is running oon port", port);
+    });
+  } catch (error) {
+    console.log(error.message);
+    process.exit(1);
+  }
+}
+
+startServer();

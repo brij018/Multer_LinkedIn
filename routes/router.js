@@ -16,6 +16,6 @@ router.post(
 );
 router.get("/", profileController.getAllProfiles);
 router.get("/:id", profileController.getSingleProfile);
-router.delete("/:id", profileController.deleteProfile);
+// router.delete("/:id", profileController.deleteProfile);
 
 export default router;

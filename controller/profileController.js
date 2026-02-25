@@ -1,6 +1,9 @@
 import Profile from "../model/profileModel.js";
 import HttpError from "../middleware/HttpError.js";
 
+import fs from "fs";
+import path from "path";
+
 const createProfile = async (req, res, next) => {
   try {
     const profile = await Profile.create({
@@ -50,29 +53,32 @@ const getSingleProfile = async (req, res, next) => {
   }
 };
 
-const deleteProfile = async (req, res, next) => {
-  try {
-    const profile = await Profile.findByIdAndDelete(req.params.id);
+// const deleteProfile = async (req, res, next) => {
+//   try {
+//     const profile = await Profile.findById(req.params.id);
 
-    if (!profile) {
-      return res.status(404).json({
-        success: false,
-        message: "Profile not found",
-      });
-    }
+//     if (!profile) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Profile not found",
+//       });
+//     }
+//     if(profile.profileImage){
+//       fs.unlinkSync(profile.profileImage)
+//     }
 
-    res.status(200).json({
-      success: true,
-      message: "Profile deleted successfully",
-    });
-  } catch (error) {
-    next(new HttpError(error.message, 500));
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Profile deleted successfully",
+//     });
+//   } catch (error) {
+//     next(new HttpError(error.message, 500));
+//   }
+// };
 
 export default {
   createProfile,
   getAllProfiles,
   getSingleProfile,
-  deleteProfile,
+  // deleteProfile,
 };
